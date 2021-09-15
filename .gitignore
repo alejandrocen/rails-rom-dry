@@ -25,3 +25,6 @@
 
 # Ignore env files
 .env
+
+# RSpec files
+/spec/examples.txt
