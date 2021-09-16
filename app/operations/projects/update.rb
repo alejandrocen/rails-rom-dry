@@ -4,6 +4,7 @@ module Projects
   class Update
     include Dry::Monads[:result]
     include Dry::Monads::Do.for(:call)
+    include RailsRomDry::Deps[repository: :project_repository]
 
     def call(id, input)
       params = yield validate(input)
@@ -18,12 +19,6 @@ module Projects
       project = repository.update(id, input)
 
       Success(project)
-    end
-
-    private
-
-    def repository
-      ProjectRepository.new(ROM.env)
     end
   end
 end

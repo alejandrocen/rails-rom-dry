@@ -4,6 +4,7 @@ module Projects
   class Create
     include Dry::Monads[:result]
     include Dry::Monads::Do.for(:call)
+    include RailsRomDry::Deps[repository: :project_repository]
 
     def call(input)
       params = yield validate(input)
@@ -18,12 +19,6 @@ module Projects
       project = repository.create(input)
 
       Success(project)
-    end
-
-    private
-
-    def repository
-      ProjectRepository.new(ROM.env)
     end
   end
 end

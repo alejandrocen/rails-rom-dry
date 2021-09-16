@@ -2,6 +2,8 @@
 
 module Api
   class ProjectsController < ApplicationController
+    include RailsRomDry::Deps[repository: :project_repository]
+
     def index
       render json: repository.all
     end
@@ -30,10 +32,6 @@ module Api
     end
 
     private
-
-    def repository
-      @repository ||= ProjectRepository.new(rom)
-    end
 
     def project_params
       params.require(:project).permit(:name)
