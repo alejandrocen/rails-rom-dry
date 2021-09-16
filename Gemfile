@@ -13,6 +13,7 @@ gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
 gem 'rom-rails', '~> 2.3'
 gem 'rom-sql', '~> 3.5'
 gem 'rubocop-rails', '~> 2.11'
+gem 'rubocop-rspec', '~> 2.4'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 group :development, :test do

@@ -3,7 +3,5 @@
 Rails.application.routes.draw do
   root to: 'api/projects#index'
 
-  namespace :api do
-    resources :projects, only: %i[index create]
-  end
+  draw('api/projects')
 end

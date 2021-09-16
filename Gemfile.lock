@@ -232,6 +232,9 @@ GEM
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.7.0, < 2.0)
+    rubocop-rspec (2.4.0)
+      rubocop (~> 1.0)
+      rubocop-ast (>= 1.1.0)
     ruby-progressbar (1.11.0)
     sequel (5.48.0)
     sprockets (4.0.2)
@@ -266,6 +269,7 @@ DEPENDENCIES
   rom-sql (~> 3.5)
   rspec-rails (~> 5.0)
   rubocop-rails (~> 2.11)
+  rubocop-rspec (~> 2.4)
   tzinfo-data
 
 RUBY VERSION

@@ -6,10 +6,20 @@ module Api
       render json: repository.all
     end
 
+    def show
+      render json: repository.by_id(params[:id])
+    end
+
     def create
-      repository.create(create_params.to_h.symbolize_keys)
+      repository.create(project_params)
 
       head :created
+    end
+
+    def update
+      repository.update(params[:id], project_params)
+
+      head :ok
     end
 
     private
@@ -18,8 +28,8 @@ module Api
       @repository ||= ProjectRepository.new(rom)
     end
 
-    def create_params
-      params.require(:project).permit(:name)
+    def project_params
+      params.require(:project).permit(:name).to_h.symbolize_keys
     end
   end
 end
