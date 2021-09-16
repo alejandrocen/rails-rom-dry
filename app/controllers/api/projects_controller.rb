@@ -10,16 +10,23 @@ module Api
       render json: repository.by_id(params[:id])
     end
 
-    def create
-      repository.create(project_params)
+    def destroy
+      project = repository.delete(params[:id])
+      head :ok unless project
+    end
 
-      head :created
+    def create
+      operation = Projects::Create.new.call(project_params.to_h)
+      return head :created if operation.success?
+
+      error!(operation.failure.errors.to_h, status: :unprocessable_entity)
     end
 
     def update
-      repository.update(params[:id], project_params)
+      operation = Projects::Update.new.call(params[:id], project_params.to_h)
+      return head :ok if operation.success?
 
-      head :ok
+      error!(operation.failure.errors.to_h, status: :unprocessable_entity)
     end
 
     private
@@ -29,7 +36,7 @@ module Api
     end
 
     def project_params
-      params.require(:project).permit(:name).to_h.symbolize_keys
+      params.require(:project).permit(:name)
     end
   end
 end

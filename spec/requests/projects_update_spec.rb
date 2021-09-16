@@ -7,10 +7,20 @@ RSpec.describe 'Projects', type: :request do
     let(:repository) { ProjectRepository.new(ROM.env) }
     let!(:project) { repository.create(name: 'Unicorn') }
 
-    it do
-      put("/api/projects/#{project.id}", params: { project: { name: 'Secret' } })
+    context do
+      it do
+        put("/api/projects/#{project.id}", params: { project: { name: 'Secret' } })
 
-      expect(repository.by_id(project.id).name).to eq('Secret')
+        expect(repository.by_id(project.id).name).to eq('Secret')
+      end
+    end
+
+    context do
+      it do
+        put("/api/projects/#{project.id}", params: { project: { name: '' } })
+
+        expect(response.status).to eq(422)
+      end
     end
   end
 end

@@ -1,0 +1,29 @@
+# frozen_string_literal: true
+
+module Projects
+  class Update
+    include Dry::Monads[:result]
+    include Dry::Monads::Do.for(:call)
+
+    def call(id, input)
+      params = yield validate(input)
+      persist(id, params.to_h)
+    end
+
+    def validate(input)
+      ProjectContract.new.call(input).to_monad
+    end
+
+    def persist(id, input)
+      project = repository.update(id, input)
+
+      Success(project)
+    end
+
+    private
+
+    def repository
+      ProjectRepository.new(ROM.env)
+    end
+  end
+end

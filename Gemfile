@@ -7,6 +7,8 @@ ruby '2.7.4'
 
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'dotenv-rails', '~> 2.7'
+gem 'dry-monads', '~> 1.4'
+gem 'dry-rails', '~> 0.3.0'
 gem 'pg', '~> 1.2'
 gem 'puma', '~> 5.0'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
