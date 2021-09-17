@@ -2,7 +2,11 @@
 
 module Api
   class ProjectsController < ApplicationController
-    include RailsRomDry::Deps[repository: :project_repository]
+    include RailsRomDry::Deps[
+      create_project: 'projects.create',
+      update_project: 'projects.update',
+      repository: :project_repository
+    ]
 
     def index
       render json: repository.all
@@ -18,14 +22,14 @@ module Api
     end
 
     def create
-      operation = Projects::Create.new.call(project_params.to_h)
+      operation = create_project.call(project_params.to_h)
       return head :created if operation.success?
 
       error!(operation.failure.errors.to_h, status: :unprocessable_entity)
     end
 
     def update
-      operation = Projects::Update.new.call(params[:id], project_params.to_h)
+      operation = update_project.call(params[:id], project_params.to_h)
       return head :ok if operation.success?
 
       error!(operation.failure.errors.to_h, status: :unprocessable_entity)
